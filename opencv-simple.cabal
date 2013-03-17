@@ -19,6 +19,15 @@ flag opencv24
   default:     True
 
 library
+    hs-source-dirs:    src
+
+    build-depends:     base >= 4 && < 6
+    exposed-modules:  
+      OpenCV, 
+      OpenCV.Core
+
+    other-modules:     OpenCV.Internal.Core
+
     build-tools:       c2hs >= 0.16.3
     include-dirs:      include/
     includes:          opencv2/core/core_c.h,
@@ -42,10 +51,19 @@ library
                        opencv_objdetect,
                        opencv_video
 
-    build-depends:     base >= 4 && < 6
+test-suite test-all
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  ghc-options: -w -threaded -rtsopts -with-rtsopts=-N
+  hs-source-dirs: tests
 
-    exposed-modules:   OpenCV.Core
-    other-modules:     OpenCV.Internal.Core
+  build-depends:
+    base,
+    opencv-simple -any,
+    HUnit >= 1.2,
+    test-framework       >= 0.6,
+    test-framework-hunit >= 0.2,
+    test-framework-th    >= 0.2
 
 source-repository head
   type:     git
