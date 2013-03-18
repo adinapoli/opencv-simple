@@ -25,15 +25,29 @@ library
     exposed-modules:  
       OpenCV, 
       OpenCV.Core
+      OpenCV.HighGui
 
-    other-modules:     OpenCV.Internal.Core
+    other-modules:     
+      OpenCV.Internal.Core
+      OpenCV.Internal.HighGui
+      OpenCV.Internal.Conversions
 
     build-tools:       c2hs >= 0.16.3
     include-dirs:      include/
-    includes:          opencv2/core/core_c.h,
-                       include/opencvsimple_core.hpp
-    c-sources:         cbits/opencvsimple_core.cpp
-    install-includes:  include/opencvsimple_core.hpp
+    includes:
+      opencv2/core/core_c.h,
+      opencv2/highgui/highgui_c.h,
+      include/opencvsimple_core.hpp
+      include/opencvsimple_highgui.hpp
+
+    c-sources:
+      cbits/opencvsimple_core.cpp
+      cbits/opencvsimple_highgui.cpp
+
+    install-includes: 
+      include/opencvsimple_core.hpp
+      include/opencvsimple_highgui.hpp
+
     if flag(opencv24)
         cpp-options: -dopencv24
         cc-options:  -dopencv24
@@ -56,6 +70,8 @@ test-suite test-all
   main-is: Main.hs
   ghc-options: -w -threaded -rtsopts -with-rtsopts=-N
   hs-source-dirs: tests
+  other-modules:     
+    OpenCV.Core.Tests
 
   build-depends:
     base,

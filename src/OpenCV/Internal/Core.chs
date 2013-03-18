@@ -10,15 +10,7 @@ module OpenCV.Internal.Core
 
 import Foreign
 import Foreign.C.Types
-
-asBool :: CInt -> Bool
-asBool c = case fromIntegral c of
-  1 -> True
-  _ -> False
-
-asCInt :: Int -> CInt
-asCInt = fromIntegral
-  
+import OpenCV.Internal.Conversions 
 
 i_getNumberOfCPUs :: IO Int
 i_getNumberOfCPUs = fmap fromIntegral {#call c_getNumberOfCPUs #}
@@ -42,4 +34,4 @@ instance Enum CvFeature where
     fromEnum CvHardwareMaxFeature = 255
 
 i_checkHardwareSupport :: CvFeature -> IO Bool
-i_checkHardwareSupport f = fmap asBool $ {#call c_checkHardwareSupport #} (asCInt . fromEnum $ f)
+i_checkHardwareSupport f = fmap asBool $ {#call cvCheckHardwareSupport #} (asCInt . fromEnum $ f)

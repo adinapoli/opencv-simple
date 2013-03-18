@@ -6,7 +6,6 @@ extern "C" {
 #endif
 
 int c_getNumberOfCPUs(void);
-int c_checkHardwareSupport(int feature);
 
 #ifdef __cplusplus
 }
