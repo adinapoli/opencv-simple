@@ -1,9 +1,15 @@
 #ifndef __OPENCVSIMPLE_CORE__
 #define __OPENCVSIMPLE_CORE__
-#endif
 
 #ifdef __cplusplus
-extern "C" 
+extern "C" {
 #endif
 
-int c_getNumberOfCPUs();
+int c_getNumberOfCPUs(void);
+int c_checkHardwareSupport(int feature);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
