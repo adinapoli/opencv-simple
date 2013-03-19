@@ -1,8 +1,18 @@
 module OpenCV.HighGui
-  ( CvWindowFlag(..)
-  , namedWindow) where
+  (WindowName
+  , WindowFlag(..)
+  , ImageFlag(..)
+  , namedWindow
+  , imread) where
 
 import OpenCV.Internal.HighGui
 
-namedWindow :: String -> CvWindowFlag -> IO ()
+
+-------------------------------------------------------------------------------
+namedWindow :: WindowName -> WindowFlag -> IO ()
 namedWindow = i_namedWindow
+
+
+-------------------------------------------------------------------------------
+imread :: FilePath -> ImageFlag -> IO Image
+imread = i_imread

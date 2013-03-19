@@ -4,21 +4,47 @@
 #include <opencv2/highgui/highgui_c.h>
 
 module OpenCV.Internal.HighGui (
-  CvWindowFlag(..)
-  , i_namedWindow) where
+  WindowName
+  , WindowFlag(..)
+  , Image
+  , ImageFlag(..)
+  , i_namedWindow
+  , i_imread) where
 
 import Foreign
 import Foreign.C.Types
 import Foreign.C.String
 import OpenCV.Internal.Conversions
 
-data CvWindowFlag = CvWindowAutosize deriving (Eq, Show)
 
-instance Enum CvWindowFlag where
-    fromEnum CvWindowAutosize  = 0x00000001
+-------------------------------------------------------------------------------
+data WindowFlag = CvWindowAutosize deriving (Eq, Show)
 
-i_namedWindow :: String -> CvWindowFlag -> IO ()
+instance Enum WindowFlag where
+  fromEnum CvWindowAutosize  = 1
+
+
+data ImageFlag = CvLoadImageColor deriving (Eq, Show)
+
+instance Enum ImageFlag where
+  fromEnum CvLoadImageColor = 1
+
+
+-------------------------------------------------------------------------------
+type WindowName = String
+
+
+-------------------------------------------------------------------------------
+{#pointer *CvMat as Image newtype #}
+
+
+-------------------------------------------------------------------------------
+i_namedWindow :: WindowName -> WindowFlag -> IO ()
 i_namedWindow n f = withCString n $ \name -> do
   {# call c_namedWindow #} name (asCEnum f)
 
 
+-------------------------------------------------------------------------------
+i_imread :: FilePath -> ImageFlag -> IO Image
+i_imread n f = withCString n $ \name -> do
+  {# call c_imread #} name (asCEnum f)
