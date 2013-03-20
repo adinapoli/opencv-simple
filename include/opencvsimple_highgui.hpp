@@ -9,6 +9,7 @@ extern "C" {
 
 void c_namedWindow(const char* name, int flags);
 CvMat* c_imread(const char* filename, int flags);
+void c_imshow(const char* winname, CvMat* img);
 
 #ifdef __cplusplus
 }

@@ -1,2 +1,7 @@
 dist*
 .DS_Store
+**.hi
+**.o
+examples/**.hi
+examples/**.o
+

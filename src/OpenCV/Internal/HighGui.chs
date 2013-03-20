@@ -9,7 +9,8 @@ module OpenCV.Internal.HighGui (
   , Image
   , ImageFlag(..)
   , i_namedWindow
-  , i_imread) where
+  , i_imread
+  , i_imshow) where
 
 import Foreign
 import Foreign.C.Types
@@ -48,3 +49,9 @@ i_namedWindow n f = withCString n $ \name -> do
 i_imread :: FilePath -> ImageFlag -> IO Image
 i_imread n f = withCString n $ \name -> do
   {# call c_imread #} name (asCEnum f)
+
+
+-------------------------------------------------------------------------------
+i_imshow :: WindowName -> Image -> IO ()
+i_imshow n i = withCString n $ \name -> do
+  {# call c_imshow #} name i
