@@ -5,7 +5,9 @@ module OpenCV.HighGui
   , namedWindow
   , withWindow
   , imread
-  , imshow) where
+  , imshow
+  , Delay
+  , waitKey) where
 
 import OpenCV.Internal.HighGui
 
@@ -17,7 +19,7 @@ namedWindow = i_namedWindow
 
 -------------------------------------------------------------------------------
 withWindow :: WindowName -> WindowFlag -> (WindowName -> IO ()) -> IO ()
-withWindow name flag f = namedWindow "name" flag >> f name
+withWindow name flag f = namedWindow name flag >> f name
 
 
 -------------------------------------------------------------------------------
@@ -28,3 +30,8 @@ imread = i_imread
 -------------------------------------------------------------------------------
 imshow :: WindowName -> Image -> IO ()
 imshow = i_imshow
+
+
+-------------------------------------------------------------------------------
+waitKey :: Delay -> IO Int
+waitKey = i_waitKey

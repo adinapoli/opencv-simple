@@ -4,4 +4,4 @@ dist*
 **.o
 examples/**.hi
 examples/**.o
-
+.hsenv*

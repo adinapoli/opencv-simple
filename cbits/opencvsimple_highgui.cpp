@@ -20,3 +20,5 @@ void c_imshow(const char* winname, CvMat* img) {
     Mat mat(img);
     return imshow(std::string(winname), mat);
 }
+
+int c_waitKey(int delay) { return waitKey(delay); }

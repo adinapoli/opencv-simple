@@ -10,7 +10,9 @@ module OpenCV.Internal.HighGui (
   , ImageFlag(..)
   , i_namedWindow
   , i_imread
-  , i_imshow) where
+  , i_imshow
+  , Delay
+  , i_waitKey) where
 
 import Foreign
 import Foreign.C.Types
@@ -36,6 +38,9 @@ type WindowName = String
 
 
 -------------------------------------------------------------------------------
+type Delay = Int
+
+-------------------------------------------------------------------------------
 {#pointer *CvMat as Image newtype #}
 
 
@@ -55,3 +60,8 @@ i_imread n f = withCString n $ \name -> do
 i_imshow :: WindowName -> Image -> IO ()
 i_imshow n i = withCString n $ \name -> do
   {# call c_imshow #} name i
+
+
+-------------------------------------------------------------------------------
+i_waitKey :: Delay -> IO Int
+i_waitKey d = fmap fromIntegral $ {# call c_waitKey #} (asCInt d)
