@@ -3,5 +3,6 @@ dist*
 **.hi
 **.o
 examples/**.hi
+examples/Img1
 examples/**.o
 .hsenv*

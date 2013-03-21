@@ -8,6 +8,10 @@ void c_namedWindow(const char* name, int flags) {
     return namedWindow(std::string(name), flags);
 }
 
+void c_destroyWindow(const char* name) {
+    return destroyWindow(std::string(name));
+}
+
 //Just for the sake of experimenting, this will be garbage collected right away
 CvMat* c_imread(const char* name, int flags) {
     //Mat tmp = imread(std::string(name), flags);

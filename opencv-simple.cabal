@@ -21,13 +21,17 @@ flag opencv24
 library
     hs-source-dirs:    src
 
-    build-depends:     base >= 4 && < 6
+    build-depends:
+      base >= 4 && < 6,
+      lens >= 3.8 && < 4.0
+
     exposed-modules:  
       OpenCV, 
       OpenCV.Core
       OpenCV.HighGui
 
     other-modules:     
+      OpenCV.Internal.Types
       OpenCV.Internal.Core
       OpenCV.Internal.HighGui
       OpenCV.Internal.Conversions

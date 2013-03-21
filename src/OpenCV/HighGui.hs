@@ -3,6 +3,7 @@ module OpenCV.HighGui
   , WindowFlag(..)
   , ImageFlag(..)
   , namedWindow
+  , destroyWindow
   , withWindow
   , imread
   , imshow
@@ -18,8 +19,12 @@ namedWindow = i_namedWindow
 
 
 -------------------------------------------------------------------------------
+destroyWindow :: WindowName -> IO ()
+destroyWindow = i_destroyWindow
+
+-------------------------------------------------------------------------------
 withWindow :: WindowName -> WindowFlag -> (WindowName -> IO ()) -> IO ()
-withWindow name flag f = namedWindow name flag >> f name
+withWindow name flag f = namedWindow name flag >> f name >> destroyWindow name
 
 
 -------------------------------------------------------------------------------

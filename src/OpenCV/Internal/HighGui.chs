@@ -9,6 +9,7 @@ module OpenCV.Internal.HighGui (
   , Image
   , ImageFlag(..)
   , i_namedWindow
+  , i_destroyWindow
   , i_imread
   , i_imshow
   , Delay
@@ -49,6 +50,10 @@ i_namedWindow :: WindowName -> WindowFlag -> IO ()
 i_namedWindow n f = withCString n $ \name -> do
   {# call c_namedWindow #} name (asCEnum f)
 
+
+-------------------------------------------------------------------------------
+i_destroyWindow :: WindowName -> IO ()
+i_destroyWindow n = withCString n $ \name -> {# call c_destroyWindow #} name
 
 -------------------------------------------------------------------------------
 i_imread :: FilePath -> ImageFlag -> IO Image

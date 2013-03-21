@@ -16,11 +16,31 @@ Mainly c2hs and a lot of good common sense.
 
 Well, don't make speculation. We'll see.
 
+## Quick Taste
+
+```haskell
+import OpenCV
+import Control.Monad
+
+main :: IO ()
+main = withWindow "cv" CvWindowAutosize $ \win -> do
+    img <- imread "pictures/opencv.png" CvLoadImageColor
+    void (imshow win img >> waitKey 0)
+```
+
 ## Caveats
 
-In order to link your executables with ghc you need to link them
-against the C++ STD library:
+* In order to link your executables with ghc you need to link them
+  against the C++ STD library:
 
-```
-ghc -O2 -lstdc++ yourprogram.hs
-```
+  ```
+  ghc -O2 -lstdc++ yourprogram.hs
+  ```
+
+* To play with the examples directly within GHCI, run it with:
+
+ ```
+ ghci -fno-ghci-sandbox
+ ```
+ 
+ This is no faultproof though, may hung your process anyway.
