@@ -1,17 +1,11 @@
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE FunctionalDependencies #-}
-{-# LANGUAGE ExistentialQuantification #-}
+module OpenCV.Internal.Types 
+  (Point) where
 
-module OpenCV.Internal.Types where
+data Point a = Point2D a a | Point3D a a a deriving (Eq, Show)
 
-import Control.Lens
-import Control.Lens.TH
+point2D :: (Num a) => a -> a -> Point a
+point2D = Point2D
 
-data Point a = forall a. Num a => Point
-  { _pointX :: a
-  , _pointY :: a
-  }
 
---instance Show Point where
---  show p = "<" ++ (over x show $ p) ++ "," ++ (over y show $ p) ++ ">"
-
+point3D :: (Num a) => a -> a -> a -> Point a
+point3D = Point3D
