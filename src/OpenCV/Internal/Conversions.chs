@@ -7,6 +7,7 @@ module OpenCV.Internal.Conversions
 
 import Foreign
 import Foreign.C.Types
+import OpenCV.Internal.Types
 
 
 -------------------------------------------------------------------------------
@@ -18,6 +19,7 @@ asBool c = if (fromIntegral c == 1) then True else False
 -------------------------------------------------------------------------------
 asCInt :: Int -> CInt
 asCInt = fromIntegral
+
 
 -------------------------------------------------------------------------------
 asCEnum :: (Enum a) => a -> CInt
