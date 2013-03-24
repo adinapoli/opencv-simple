@@ -43,7 +43,7 @@ master degree's work:
 
 * A "command/plugin" system, inspired by the respective design patterns. A
   command is a well defined, auto contained piece of functionality which we
-  can pass to the ´´Reactor´´. Suppose we want to create a new OpenCV Point;
+  can pass to the ``Reactor``. Suppose we want to create a new OpenCV Point;
   we'll create a new C++ functions which creates the Point. Then we'll register
   this command to the reactor exposing the "point" command to the outside.
   Hopefully this will be clear with an example later.
@@ -59,10 +59,10 @@ for example ``Ptr VideoCapture`` (because the latter is a C++ class) we'll
 need to do something as ugly as:
 
 ```haskell
-newtype VideoCapture = VideoCapture String
+newtype VideoCapture = VideoCapture ByteString
 ```
 
-Where the ``String`` is the memory address of our C++ object. I'm currently
+Where the ``ByteString`` is the memory address of our C++ object. I'm currently
 wondering if we can reuse the FFI ``Ptr a`` type but I doubt so, because we
 need as ``a`` a valid C pointer, which we don't have. What happen, then, when
 we want to access this ``VideoCapture``? Well, we'll send to our C++ broker
