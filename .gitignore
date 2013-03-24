@@ -6,3 +6,5 @@ examples/**.hi
 examples/Img1
 examples/**.o
 .hsenv*
+rabbitmq-c
+rabbitmq-cpp
