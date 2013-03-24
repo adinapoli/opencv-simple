@@ -1,8 +1,6 @@
 
-module OpenCV
-  ( module OpenCV.Core
-  , module OpenCV.HighGui
-  ) where
+module OpenCV (module CV) where
 
-import OpenCV.Core
-import OpenCV.HighGui
+import OpenCV.Core as CV
+import OpenCV.HighGui as CV
+import OpenCV.Unsafe.HighGui as CV

@@ -11,11 +11,14 @@ module OpenCV.Internal.HighGui (
   , i_namedWindow
   , i_destroyWindow
   , i_imread
+  , i_unsafeImread
   , i_imshow
   , Delay
   , i_waitKey) where
 
-import Foreign
+import Foreign hiding (unsafePerformIO)
+import System.IO.Unsafe
+import Foreign.Ptr
 import Foreign.C.Types
 import Foreign.C.String
 import OpenCV.Internal.Conversions
@@ -44,7 +47,6 @@ type Delay = Int
 -------------------------------------------------------------------------------
 {#pointer *CvMat as Image newtype #}
 
-
 -------------------------------------------------------------------------------
 i_namedWindow :: WindowName -> WindowFlag -> IO ()
 i_namedWindow n f = withCString n $ \name -> do
@@ -55,10 +57,18 @@ i_namedWindow n f = withCString n $ \name -> do
 i_destroyWindow :: WindowName -> IO ()
 i_destroyWindow n = withCString n $ \name -> {# call c_destroyWindow #} name
 
+
 -------------------------------------------------------------------------------
-i_imread :: FilePath -> ImageFlag -> IO Image
-i_imread n f = withCString n $ \name -> do
+i_unsafeImread :: FilePath -> ImageFlag -> IO Image
+i_unsafeImread n f = withCString n $ \name -> do
   {# call c_imread #} name (asCEnum f)
+
+
+-------------------------------------------------------------------------------
+i_imread :: FilePath -> ImageFlag -> Maybe Image
+i_imread n f = let img = unsafePerformIO (i_unsafeImread n f)
+                 in handlePtr img
+  where handlePtr (Image i) = if (i == nullPtr) then Nothing else Just (Image i)
 
 
 -------------------------------------------------------------------------------

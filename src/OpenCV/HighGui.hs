@@ -28,7 +28,7 @@ withWindow name flag f = namedWindow name flag >> f name >> destroyWindow name
 
 
 -------------------------------------------------------------------------------
-imread :: FilePath -> ImageFlag -> IO Image
+imread :: FilePath -> ImageFlag -> Maybe Image
 imread = i_imread
 
 

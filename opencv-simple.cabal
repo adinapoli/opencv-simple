@@ -14,6 +14,8 @@ category:            Computer Vision
 cabal-version:       >=1.8
 build-type:          Simple
 
+extra-source-files: examples/pictures/opencv.png
+
 flag opencv24
   description: Compatibility for opencv 2.4
   default:     True
@@ -29,6 +31,7 @@ library
       OpenCV, 
       OpenCV.Core
       OpenCV.HighGui
+      OpenCV.Unsafe.HighGui
 
     other-modules:     
       OpenCV.Internal.Types
@@ -39,9 +42,6 @@ library
     build-tools:       c2hs >= 0.16.3
     include-dirs:      include/
     includes:
-      opencv2/core/core_c.h,
-      opencv2/core/types_c.h,
-      opencv2/highgui/highgui_c.h,
       include/opencvsimple_core.hpp
       include/opencvsimple_highgui.hpp
       include/opencvsimple_imgproc.hpp
@@ -59,7 +59,7 @@ library
     if flag(opencv24)
         cpp-options: -dopencv24
         cc-options:  -dopencv24
-    cc-options:        --std=c99 -U__BLOCKS__
+    cc-options:         -U__BLOCKS__
     extra-libraries:   opencv_calib3d,
                        opencv_contrib,
                        opencv_core,
@@ -77,12 +77,15 @@ test-suite test-all
   type: exitcode-stdio-1.0
   main-is: Main.hs
   ghc-options: -w -threaded -rtsopts -with-rtsopts=-N
+  extra-libraries: stdc++
   hs-source-dirs: tests
   other-modules:     
     OpenCV.Core.Tests
+    OpenCV.HighGui.Tests
 
   build-depends:
     base,
+    directory -any,
     opencv-simple -any,
     HUnit >= 1.2,
     test-framework       >= 0.6,
