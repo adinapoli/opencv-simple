@@ -12,17 +12,15 @@ void c_destroyWindow(const char* name) {
     return destroyWindow(std::string(name));
 }
 
-//Just for the sake of experimenting, this will be garbage collected right away
 CvMat* c_imread(const char* name, int flags) {
-    //Mat tmp = imread(std::string(name), flags);
-    //Mat* mat = new Mat(tmp)
-    CvMat* mat = cvLoadImageM(name, flags);
-    return mat;
+    return cvLoadImageM(name, flags);
 }
+
 
 void c_imshow(const char* winname, CvMat* img) {
     Mat mat(img);
     return imshow(std::string(winname), mat);
 }
+
 
 int c_waitKey(int delay) { return waitKey(delay); }

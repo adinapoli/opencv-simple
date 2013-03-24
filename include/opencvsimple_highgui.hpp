@@ -1,7 +1,7 @@
 #ifndef __OPENCVSIMPLE_HIGHGUI__
 #define __OPENCVSIMPLE_HIGHGUI__
 
-#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/highgui/highgui_c.h>
 
 #ifdef __cplusplus
 extern "C" {
