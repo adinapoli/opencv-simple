@@ -53,6 +53,45 @@ master degree's work:
 
 #### C++ classes
 
+On the Haskell side, every interaction with the C++ counterpart will be
+regulated by handling raw pointers. Since we don't have the luxury of saying,
+for example ``Ptr VideoCapture`` (because the latter is a C++ class) we'll
+need to do something as ugly as:
+
+```haskell
+newtype VideoCapture = VideoCapture String
+```
+
+Where the ``String`` is the memory address of our C++ object. I'm currently
+wondering if we can reuse the FFI ``Ptr a`` type but I doubt so, because we
+need as ``a`` a valid C pointer, which we don't have. What happen, then, when
+we want to access this ``VideoCapture``? Well, we'll send to our C++ broker
+this string, which we'll be searched into the ``ReferenceTable``: the latter
+associate a C++ object/ data structure with his memory address. This is the
+trick which allowed me to bind Laetus to Erlang. Once we find this object we
+invoke the requested method and sends back the response to Haskell. This last
+statement should not be taken lightly.
+
+### Purity and C++
+Certain OpenCV functions are pure by nature, for example:
+
+```cpp
+float fastAtan2(float y, float x);
+```
+
+And the good thing is that the ```float``` type has a natural counterpart in
+Haskell. But take a look at this for example:
+
+```cpp
+void blur(InputArray src, OutputArray dst, Size ksize, Point anchor=Point(-1,-1), int borderType=BORDER_DEFAULT )
+```
+
+Apart from the implicit side effect of "filling" the ```OutputArray``` with the
+blurred image, if we create and maintain a C++ object we must be wary of not
+modify its internal state later on! Not only this requires a strong discipline,
+but is deceiving by nature. By this is a problem that we could also have with
+the standard FFI interface, so nothing new here.
+
 
 ## Why?
 
@@ -78,7 +117,7 @@ things:
   of successful completion or encourage type safety. In the example below, 
   ``unsafeImread`` has signature ``unsafeImread :: FilePath -> CvImageFlag -> Image``
   where ``Image`` is just a nice name for a ``CvMat*`` pointer (notice that we
-  are currently using the C data structures, this hopefully we'll change if I
+  are currently using the C data structures, this hopefully will change if I
   succeed in implementing the RabbitMQ-driven binding mechanism). Compare now
   with the safe function: ``imread :: FilePath -> CvImageFlag -> Maybe Image``
 
